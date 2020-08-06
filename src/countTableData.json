@@ -1,0 +1,50 @@
+[
+  {
+    "id": 3,
+    "lineNumber": 1,
+    "itemName": "חגורת זית",
+    "materialNumber": "1",
+    "amount": null,
+    "batchNumber": null,
+    "isLocked": null,
+    "lastUpdateInDB": "2020-05-20T01:03:32.000Z",
+    "identifierLines": [{ "id": 1, "checked": null, "serialNumber": "43432" }]
+  },
+  {
+    "id": 4,
+    "lineNumber": 2,
+    "itemName": "חולצות",
+    "materialNumber": "222222222",
+    "amount": 2,
+    "batchNumber": null,
+    "isLocked": null,
+    "lastUpdateInDB": "2020-05-20T01:06:02.000Z",
+    "identifierLines": []
+  },
+  {
+    "id": 5,
+    "lineNumber": 3,
+    "itemName": "חגורת זית",
+    "materialNumber": "1",
+    "amount": 2,
+    "batchNumber": null,
+    "isLocked": true,
+    "lastUpdateInDB": "2020-05-20T01:03:32.000Z",
+    "identifierLines": [
+      { "id": 1, "checked": true, "serialNumber": "43432" },
+      { "id": 2, "checked": false, "serialNumber": "43432" },
+      { "id": 3, "checked": true, "serialNumber": "43432" }
+    ]
+  },
+  {
+    "id": 6,
+    "lineNumber": 3,
+    "itemName": "חגורת זית",
+    "materialNumber": "1",
+    "amount": null,
+    "batchNumber": "123444",
+    "isLocked": true,
+    "lastUpdateInDB": "2020-05-20T01:03:32.000Z",
+    "identifierLines": []
+  }
+]
