@@ -1,13 +1,13 @@
 import userActions from "./userActions";
 import computersActions from "./computersActions";
-import parametersActions from "./parametersActions";
 import searchActions from "./searchActions";
+import systemDataActions from "./systemDataActions";
 
 const allActions = {
   userActions,
   computersActions,
-  parametersActions,
   searchActions,
+  systemDataActions,
 };
 
 export default allActions;

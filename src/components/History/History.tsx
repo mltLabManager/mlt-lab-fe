@@ -18,8 +18,8 @@ function History({ data, isOpen, setIsOpen }: HistoryProps) {
       {data.map((history, i) => (
         <HistoryRow
           key={i}
-          userId={history.userId}
-          date={history.date}
+          userId={history.changedBy}
+          date={history.lastChangedAt}
           from={history.from}
           to={history.to}
           showDivider={i !== data.length - 1}

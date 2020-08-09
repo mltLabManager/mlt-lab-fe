@@ -3,239 +3,37 @@ import ComputerRow from "./ComputerRow";
 import ComputerTitle from "./ComputerTitle";
 import { useSelector, useDispatch } from "react-redux";
 import allActions from "../../actions";
+import useStyles from "./ComputersList.style";
 
 function ComputersList() {
   const dispatch = useDispatch();
-
+  const classes = useStyles();
   const search = useSelector((state: RootState) => state.search);
+  const [listOffset, setListOffset] = React.useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
-    dispatch(
-      allActions.computersActions.setComputers([
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1234",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "123",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "12",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-        {
-          id: "1",
-          oldId: "AAAA",
-          vendor: "DELL",
-          location: 2,
-          status: 1,
-          lastUpdate: new Date(),
-          type: 3,
-          model: "בדיקה",
-          donatedBy: "בדיקה",
-          enteringDate: new Date(),
-          deliveryDate: new Date(),
-          destination: "בדיקה",
-          cpu: 4,
-          ram: 5,
-          sdd: null,
-          imageInstall: false,
-          histories: [{ id: 1, userId: "207004342", date: new Date(), from: "מעבדה 1", to: "מעבדה 23" }],
-        },
-      ])
+    setListOffset(
+      document.getElementById("TitleList")
+        ? document.getElementById("navbar")!.offsetHeight +
+            document.getElementById("cover")!.offsetHeight +
+            document.getElementById("TitleList")!.offsetHeight
+        : 0
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div>
       <ComputerTitle />
-      {useSelector((state: RootState) => state.computers)
-        .filter((check) => {
-          return check.id.includes(search.text) || check.oldId.includes(search.text);
-        })
-        .map((computer) => (
-          <ComputerRow key={computer.id} data={computer} />
-        ))}
+      <div style={{ height: window.innerHeight - listOffset }} className={classes.list}>
+        {useSelector((state: RootState) => state.computers)
+          .filter((check) => {
+            return check.id.toString().includes(search.text) || check.oldId.toString().includes(search.text);
+          })
+          .map((computer) => (
+            <ComputerRow key={computer.id} data={computer} />
+          ))}
+      </div>
     </div>
   );
 }

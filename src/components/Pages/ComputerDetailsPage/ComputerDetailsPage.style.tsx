@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     margin: "10px",
     border: "1px solid #3955F6",
-    borderRadius: "20px",
+    borderRadius: "40px",
   },
   title: {
     textAlign: "center",
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     backgroundColor: "#3955F6",
     color: "white",
     border: "1px solid transparent",
-    borderRadius: "10px",
+    borderRadius: "40px",
   },
   textField: {
     margin: "15px",
@@ -46,12 +46,16 @@ const useStyles = makeStyles({
     "& input": {
       textAlign: "center",
     },
+    borderRadius: "50px",
+    "& div": {
+      borderRadius: "50px",
+    },
   },
   switchBase: {
     "&$checked": {
-      color: "#0F7D6A",
+      color: "#0F7D6A !important",
       "& + $track": {
-        backgroundColor: "white",
+        backgroundColor: "white !important",
         opacity: 1,
         border: "1px solid #0F7D6A",
       },
@@ -61,6 +65,10 @@ const useStyles = makeStyles({
   track: {},
   checked: {},
   focusVisible: {},
+  backdrop: {
+    zIndex: 1,
+    color: "#fff",
+  },
 });
 
 export default useStyles;

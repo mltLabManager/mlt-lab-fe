@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { FormControl, Select, MenuItem } from "@material-ui/core";
+import useStyles from "./DropDownList.style";
 
 type DropDownListProps = {
   type: number;
@@ -9,9 +10,13 @@ type DropDownListProps = {
 };
 
 function DropDownList({ type, value, setValue }: DropDownListProps) {
-  const values = useSelector((state: RootState) => state.parameters).filter((parameter) => parameter.type === type);
+  const values = useSelector((state: RootState) => state.systemData).filter(
+    (parameter) => parameter.key === type.toString()
+  );
+  const classes = useStyles();
+
   return (
-    <FormControl variant="outlined" margin="dense">
+    <FormControl variant="outlined" margin="dense" className={classes.root}>
       <Select
         value={value == null ? "" : value}
         onChange={(event) => setValue(event.target.value as number)}

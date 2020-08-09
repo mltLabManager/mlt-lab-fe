@@ -6,13 +6,22 @@ import rootReducer from "./reducers";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 const store = createStore(rootReducer);
+
+const myTheme = createMuiTheme({
+  typography: {
+    fontFamily: "Arimo",
+  },
+});
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <MuiThemeProvider theme={myTheme}>
+        <App />
+      </MuiThemeProvider>
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")

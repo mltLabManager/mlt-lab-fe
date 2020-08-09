@@ -1,17 +1,21 @@
 import React from "react";
 import { Grid, Typography, Divider } from "@material-ui/core";
 import useStyles from "./HistoryRow.style";
+import { formatDate } from "../../utils/dates";
+import { useSelector } from "react-redux";
 
 type HistoryProps = {
   userId: string;
-  date: Date;
-  from: string;
-  to: string;
+  date: string;
+  from: number;
+  to: number;
   showDivider: boolean;
 };
 
 function History({ userId, date, from, to, showDivider }: HistoryProps) {
   const classes = useStyles();
+
+  const values = useSelector((state: RootState) => state.systemData);
 
   return (
     <Grid container>
@@ -25,17 +29,17 @@ function History({ userId, date, from, to, showDivider }: HistoryProps) {
         <Typography>{userId}</Typography>
       </Grid>
       <Grid className={classes.inputHolder} item xs={6}>
-        <Typography>{date.toString()}</Typography>
+        <Typography>{formatDate(date)}</Typography>
       </Grid>
       <div style={{ margin: "10px", display: "flex", width: "100%" }}>
         <Grid className={classes.inputHolder} item xs={4}>
-          <Typography>{from}</Typography>
+          <Typography>{values.find((val) => from === val.id)?.value}</Typography>
         </Grid>
         <Grid className={classes.inputHolder} item xs={4}>
           <Typography>{"->"}</Typography>
         </Grid>
         <Grid className={classes.inputHolder} item xs={4}>
-          <Typography>{to}</Typography>
+          <Typography>{values.find((val) => to === val.id)?.value}</Typography>
         </Grid>
       </div>
       {showDivider ? (

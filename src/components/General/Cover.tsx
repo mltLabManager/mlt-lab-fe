@@ -22,7 +22,7 @@ function LoginPage() {
   }
 
   return (
-    <Grid container className={classes.root}>
+    <Grid id="cover" container className={classes.root}>
       <Grid item xs={5}>
         <img className={classes.images} src={IndustryImage} alt="Industry" />
       </Grid>

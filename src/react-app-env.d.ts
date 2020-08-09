@@ -2,35 +2,29 @@
 interface TableRow {
   id: string;
   oldId: string;
-  vendor: string;
-  location: number | null;
-  status: number | null;
-  lastUpdate: Date;
-  type: number | null;
-  model: string;
+  provider: string;
+  currentLocation: number | null;
+  currentStatus: number | null;
+  lastUpdateDate: string;
+  computerType: number | null;
+  computerModel: string;
   donatedBy: string;
-  enteringDate: Date;
-  deliveryDate: Date;
-  destination: String;
+  entryDate: string;
+  deliveryDate: string;
+  destination: string;
   cpu: number | null;
   ram: number | null;
   sdd: number | null;
-  imageInstall: boolean;
-  histories: History[];
+  isImageInstalled: boolean;
+  compuetrHistorys: History[];
 }
 
 interface History {
   id: number;
-  userId: string;
-  date: Date;
-  from: string;
-  to: string;
-}
-
-interface Parameter {
-  id: number;
-  type: number;
-  value: string;
+  changedBy: string;
+  lastChangedAt: string;
+  from: number;
+  to: number;
 }
 
 interface Search {
@@ -38,9 +32,15 @@ interface Search {
   text: string;
 }
 
+interface SystemData {
+  id: number;
+  key: string;
+  value: string;
+}
+
 interface RootState {
   userId: string;
   computers: TableRow[];
-  parameters: Parameter[];
   search: Search;
+  systemData: SystemData[];
 }

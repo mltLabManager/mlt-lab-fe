@@ -3,27 +3,22 @@ import useStyles from "./ComputersPage.style";
 import Cover from "../../General/Cover";
 import ComputersList from "../../ComputersList/ComputersList";
 import Computer from "../../../assets/icons/computer.png";
-import SearchArea from "../../SearchArea/SearchArea";
 import { useSelector, useDispatch } from "react-redux";
 import allActions from "../../../actions";
+import { useHistory } from "react-router-dom";
 
 function ComputerPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const search = useSelector((state: RootState) => state.search);
+  const history = useHistory();
+  const userId = useSelector((state: RootState) => state.userId);
 
-  React.useEffect(() => {
-    dispatch(
-      allActions.parametersActions.setParameters([
-        { type: 1, id: 1, value: "מעבדה 1" },
-        { type: 1, id: 2, value: "מעבדה 2" },
-      ])
-    );
-  }, []);
+  if (userId === "") {
+    history.push("/");
+  }
 
   return (
     <div>
-      {search.isOpen ? <SearchArea /> : null}
       <Cover />
       <ComputersList />
       <img src={Computer} alt="Computer" className={classes.image} />

@@ -1,6 +1,6 @@
 import React from "react";
 import useStyles from "./ComputerDetailsPage.style";
-import { Grid, Typography, Button, TextField, Switch, Snackbar } from "@material-ui/core";
+import { Grid, Typography, Button, TextField, Switch, Snackbar, Backdrop, CircularProgress } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -11,18 +11,24 @@ import City from "../../../assets/icons/city.png";
 import HistoryPopup from "../../History/History";
 import DropDownList from "../../ComputersList/DropDownList";
 import { formatDate } from "../../../utils/dates";
+import ComputerDataService from "../../../services/ComputerData";
 
 function ComputerTitle() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { computerId } = useParams();
   const history = useHistory();
   const [showHistory, setShowHistory] = React.useState(false);
   const [changedComputer, setChangedComputer] = React.useState({} as TableRow);
   const [showSuccessSave, setShowSuccessSave] = React.useState(false);
+  const [showErrorSave, setShowErrorSave] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(false);
 
   const currentComputer = useSelector((state: RootState) => state.computers).find(
-    (computer) => computer.id === computerId
+    (computer) => computer.id.toString() === computerId.toString()
   );
+
+  const userId = useSelector((state: RootState) => state.userId);
 
   if (currentComputer == null) {
     history.push("/computers");
@@ -32,9 +38,18 @@ function ComputerTitle() {
     setShowHistory(true);
   };
 
-  const onSave = () => {
-    console.log(changedComputer);
-    setShowSuccessSave(true);
+  const onSave = async () => {
+    setIsLoad(true);
+    ComputerDataService.updateComputerData(changedComputer, userId)
+      .then((newComputer) => {
+        dispatch(allActions.computersActions.changeComputer(newComputer));
+        setShowSuccessSave(true);
+        setIsLoad(false);
+      })
+      .catch((error) => {
+        setShowErrorSave(true);
+        console.log(error);
+      });
   };
 
   React.useEffect(() => {
@@ -61,23 +76,23 @@ function ComputerTitle() {
               <Typography className={classes.inputTitle}>מיקום</Typography>
               <DropDownList
                 type={1}
-                value={changedComputer.location!}
+                value={changedComputer.currentLocation!}
                 setValue={(newValue: number) => {
-                  setChangedComputer(Object.assign({}, changedComputer, { location: newValue }));
+                  setChangedComputer(Object.assign({}, changedComputer, { currentLocation: newValue }));
                 }}
               />
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>תאריך עדכון</Typography>
-              <Typography className={classes.textField}>{formatDate(changedComputer.lastUpdate!)}</Typography>
+              <Typography className={classes.textField}>{formatDate(changedComputer.lastUpdateDate!)}</Typography>
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>סטטוס</Typography>
               <DropDownList
                 type={2}
-                value={changedComputer.status!}
+                value={changedComputer.currentStatus!}
                 setValue={(newValue: number) => {
-                  setChangedComputer(Object.assign({}, changedComputer, { status: newValue }));
+                  setChangedComputer(Object.assign({}, changedComputer, { currentStatus: newValue }));
                 }}
               />
             </Grid>
@@ -85,9 +100,9 @@ function ComputerTitle() {
               <Typography className={classes.inputTitle}>סוג מחשב</Typography>
               <DropDownList
                 type={3}
-                value={changedComputer.type!}
+                value={changedComputer.computerType!}
                 setValue={(newValue: number) => {
-                  setChangedComputer(Object.assign({}, changedComputer, { type: newValue }));
+                  setChangedComputer(Object.assign({}, changedComputer, { computerType: newValue }));
                 }}
               />
             </Grid>
@@ -97,9 +112,9 @@ function ComputerTitle() {
                 className={classes.textField}
                 variant="outlined"
                 size="small"
-                value={changedComputer.vendor}
+                value={changedComputer.provider}
                 onChange={(event) =>
-                  setChangedComputer(Object.assign({}, changedComputer, { vendor: event.target.value }))
+                  setChangedComputer(Object.assign({}, changedComputer, { provider: event.target.value }))
                 }
               />
             </Grid>
@@ -109,9 +124,9 @@ function ComputerTitle() {
                 className={classes.textField}
                 variant="outlined"
                 size="small"
-                value={changedComputer.model}
+                value={changedComputer.computerModel}
                 onChange={(event) =>
-                  setChangedComputer(Object.assign({}, changedComputer, { model: event.target.value }))
+                  setChangedComputer(Object.assign({}, changedComputer, { computerModel: event.target.value }))
                 }
               />
             </Grid>
@@ -129,7 +144,7 @@ function ComputerTitle() {
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>תאריך קליטה</Typography>
-              <Typography className={classes.textField}>{formatDate(changedComputer.enteringDate!)}</Typography>
+              <Typography className={classes.textField}>{formatDate(changedComputer.entryDate!)}</Typography>
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>יעד</Typography>
@@ -151,7 +166,7 @@ function ComputerTitle() {
                   value={changedComputer.deliveryDate}
                   onChange={(date) => setChangedComputer(Object.assign({}, changedComputer, { deliveryDate: date }))}
                   format="dd.MM.yyyy"
-                  minDate={changedComputer.enteringDate}
+                  minDate={changedComputer.entryDate}
                 />
               </MuiPickersUtilsProvider>
             </Grid>
@@ -205,9 +220,9 @@ function ComputerTitle() {
                   track: classes.track,
                   checked: classes.checked,
                 }}
-                checked={changedComputer.imageInstall}
+                checked={changedComputer.isImageInstalled}
                 onChange={(event) =>
-                  setChangedComputer(Object.assign({}, changedComputer, { imageInstall: event.target.checked }))
+                  setChangedComputer(Object.assign({}, changedComputer, { isImageInstalled: event.target.checked }))
                 }
                 name="checkedA"
                 inputProps={{ "aria-label": "secondary checkbox" }}
@@ -223,11 +238,17 @@ function ComputerTitle() {
       ) : null}
       <img src={City} alt="City" className={classes.image} />
       {showHistory ? (
-        <HistoryPopup data={currentComputer!.histories} isOpen={showHistory} setIsOpen={setShowHistory} />
+        <HistoryPopup data={currentComputer!.compuetrHistorys} isOpen={showHistory} setIsOpen={setShowHistory} />
       ) : null}
       <Snackbar open={showSuccessSave} autoHideDuration={6000} onClose={() => setShowSuccessSave(false)}>
         <Alert severity="success">פרטי המחשב עודכנו בהצלחה</Alert>
       </Snackbar>
+      <Snackbar open={showErrorSave} autoHideDuration={6000} onClose={() => setShowErrorSave(false)}>
+        <Alert severity="error">אופס! חלה שגיאה בעדכון פרטי המחשב</Alert>
+      </Snackbar>
+      <Backdrop className={classes.backdrop} open={isLoad}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 }

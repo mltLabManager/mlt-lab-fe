@@ -1,4 +1,4 @@
-function formatDate(date: Date) {
+function formatDate(date: string) {
   var d = new Date(date),
     month = "" + (d.getMonth() + 1),
     day = "" + d.getDate(),

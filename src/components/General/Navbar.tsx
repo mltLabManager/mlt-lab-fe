@@ -6,12 +6,14 @@ import useStyles from "./Navbar.style";
 import SearchIcon from "../../assets/icons/search.png";
 import { useSelector, useDispatch } from "react-redux";
 import allActions from "../../actions";
+import SearchArea from "../SearchArea/SearchArea";
 
 function Navbar() {
   const classes = useStyles();
   const { pathname } = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const search = useSelector((state: RootState) => state.search);
 
   const logoClick = () => {
     history.push("/computers");
@@ -23,7 +25,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="sticky" className={classes.navbar} elevation={0}>
+    <AppBar position="sticky" className={classes.navbar} elevation={0} id="navbar">
       {pathname !== "/" ? (
         <Toolbar style={{ justifyContent: "center" }}>
           <img src={Logo} alt="Logo" onClick={logoClick} />
@@ -35,6 +37,7 @@ function Navbar() {
           />
         </Toolbar>
       ) : null}
+      {search.isOpen ? <SearchArea /> : null}
     </AppBar>
   );
 }
