@@ -7,6 +7,7 @@ const useStyles = makeStyles({
   text: {
     textAlign: "center",
     color: "white",
+    padding: "12px 1px",
   },
 });
 

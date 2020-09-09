@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Arimo");
 
 body {
-  background-color: #f9d452;
+  background-color: #e3e7fe;
   margin: 0;
   font-family: "Arimo" !important;
   -webkit-font-smoothing: antialiased;
@@ -10,7 +10,8 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 html {

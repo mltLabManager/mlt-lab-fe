@@ -15,7 +15,7 @@ function ComputerRow({ data }: ComputerRowProps) {
   const dispatch = useDispatch();
   const search = useSelector((state: RootState) => state.search);
 
-  const values = useSelector((state: RootState) => state.systemData);
+  const values = useSelector((state: RootState) => state.parameterData);
 
   const toComputerDetials = () => {
     dispatch(allActions.searchActions.setSearch(Object.assign({}, search, { isOpen: false })));
@@ -28,13 +28,19 @@ function ComputerRow({ data }: ComputerRowProps) {
         <Typography className={classes.text}>{data.id}</Typography>
       </Grid>
       <Grid item xs={3}>
-        <Typography className={classes.text}>{data.provider}</Typography>
+        <Typography className={classes.text}>
+          {values[2].systemData.find((val) => data.computerType?.toString() === val.id.toString())?.value}
+        </Typography>
       </Grid>
       <Grid item xs={3}>
-        <Typography className={classes.text}>{values.find((val) => data.currentLocation === val.id)?.value}</Typography>
+        <Typography className={classes.text}>
+          {values[0].systemData.find((val) => data.currentLocation!.toString() === val.id.toString())?.value}
+        </Typography>
       </Grid>
       <Grid item xs={2}>
-        <Typography className={classes.text}>{values.find((val) => data.currentStatus === val.id)?.value}</Typography>
+        <Typography className={classes.text}>
+          {values[1].systemData.find((val) => data.currentStatus!.toString() === val.id.toString())?.value}
+        </Typography>
       </Grid>
       <Grid item xs={1}>
         <Typography className={classes.text} style={{ color: "#3955F6" }}>

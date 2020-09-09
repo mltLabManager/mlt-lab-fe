@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Typography, Divider } from "@material-ui/core";
 import useStyles from "./HistoryRow.style";
 import { formatDate } from "../../utils/dates";
@@ -9,18 +9,19 @@ type HistoryProps = {
   date: string;
   from: number;
   to: number;
+  keyValue: number;
   showDivider: boolean;
 };
 
-function History({ userId, date, from, to, showDivider }: HistoryProps) {
+function History({ userId, date, from, to, keyValue, showDivider }: HistoryProps) {
   const classes = useStyles();
 
-  const values = useSelector((state: RootState) => state.systemData);
+  const values = useSelector((state: RootState) => state.parameterData);
 
   return (
     <Grid container>
       <Grid className={classes.inputHolder} item xs={6}>
-        <Typography className={classes.inputTitle}>ת.ז.</Typography>
+        <Typography className={classes.inputTitle}>מס' טלפון</Typography>
       </Grid>
       <Grid className={classes.inputHolder} item xs={6}>
         <Typography className={classes.inputTitle}>תאריך ביצוע</Typography>
@@ -31,17 +32,17 @@ function History({ userId, date, from, to, showDivider }: HistoryProps) {
       <Grid className={classes.inputHolder} item xs={6}>
         <Typography>{formatDate(date)}</Typography>
       </Grid>
-      <div style={{ margin: "10px", display: "flex", width: "100%" }}>
-        <Grid className={classes.inputHolder} item xs={4}>
-          <Typography>{values.find((val) => from === val.id)?.value}</Typography>
+      <Grid container style={{ margin: "10px" }}>
+        <Grid className={classes.inputHolder} item xs={6}>
+          <Typography>{values[keyValue - 1].systemData.find((val) => from === +val.id)?.value}</Typography>
         </Grid>
-        <Grid className={classes.inputHolder} item xs={4}>
+        <Grid className={classes.inputHolder} item xs={1}>
           <Typography>{"->"}</Typography>
         </Grid>
-        <Grid className={classes.inputHolder} item xs={4}>
-          <Typography>{values.find((val) => to === val.id)?.value}</Typography>
+        <Grid className={classes.inputHolder} item xs={5}>
+          <Typography>{values[keyValue - 1].systemData.find((val) => to === +val.id)?.value}</Typography>
         </Grid>
-      </div>
+      </Grid>
       {showDivider ? (
         <Grid item xs={12}>
           <Divider style={{ margin: "10px", backgroundColor: "#3955F6" }} />

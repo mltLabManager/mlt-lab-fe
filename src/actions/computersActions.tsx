@@ -12,7 +12,15 @@ const changeComputer = (computersObj: any) => {
   };
 };
 
+const addComputers = (computersObj: any) => {
+  return {
+    type: "ADD_COMPUTERS",
+    payload: computersObj,
+  };
+};
+
 export default {
   setComputers,
   changeComputer,
+  addComputers,
 };

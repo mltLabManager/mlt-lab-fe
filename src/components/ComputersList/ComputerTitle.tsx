@@ -11,7 +11,7 @@ function ComputerTitle() {
         <Typography className={classes.text}>מספר סידורי</Typography>
       </Grid>
       <Grid item xs={3}>
-        <Typography className={classes.text}>יצרן</Typography>
+        <Typography className={classes.text}>סוג פריט</Typography>
       </Grid>
       <Grid item xs={3}>
         <Typography className={classes.text}>מיקום</Typography>

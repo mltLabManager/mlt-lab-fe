@@ -4,7 +4,7 @@ import useStyles from "./History.style";
 import HistoryRow from "./HistoryRow";
 
 type HistoryProps = {
-  data: History[];
+  data: History[] | undefined;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
@@ -15,16 +15,18 @@ function History({ data, isOpen, setIsOpen }: HistoryProps) {
   return (
     <Dialog onClose={() => setIsOpen(false)} open={isOpen} classes={{ paper: classes.root }}>
       <Typography className={classes.title}>היסטוריה</Typography>
-      {data.map((history, i) => (
-        <HistoryRow
-          key={i}
-          userId={history.changedBy}
-          date={history.lastChangedAt}
-          from={history.from}
-          to={history.to}
-          showDivider={i !== data.length - 1}
-        />
-      ))}
+      {data &&
+        data.map((history, i) => (
+          <HistoryRow
+            key={i}
+            userId={history.changedBy}
+            date={history.lastChangedAt}
+            from={history.from}
+            to={history.to}
+            keyValue={history.key}
+            showDivider={i !== data.length - 1}
+          />
+        ))}
     </Dialog>
   );
 }

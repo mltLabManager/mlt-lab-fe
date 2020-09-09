@@ -5,11 +5,15 @@ import { Backdrop, CircularProgress, Snackbar } from "@material-ui/core";
 import routes from "./routes";
 import Navbar from "./components/General/Navbar";
 import "./App.css";
-import SystemDataService from "./services/SystemData";
+import * as ParameterService from "./services/ParameterData";
+// import SystemDataService from "./services/SystemData";
 import ComputerDataService from "./services/ComputerData";
 import { useDispatch } from "react-redux";
 import allActions from "./actions";
 import Alert from "@material-ui/lab/Alert";
+import SystemDataService from "./services/SystemData";
+import UserService from "./services/UserService";
+import AppFooter from "./components/General/Footer/Footer";
 
 const useStyles = makeStyles({
   backdrop: {
@@ -23,6 +27,15 @@ function App() {
   const classes = useStyles();
   const [isLoad, setIsLoad] = React.useState(false);
   const [showError, setShowError] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
+
+  // const getJwt = async () => {
+  //   const token = await UserService.getToken({
+  //     phone: "0544553785",
+  //     password: "Sapir123",
+  //   });
+  //   setIsLogin(token.length > 0);
+  // };
 
   const pages = routes.map((route) => (
     <Route key={route.path} exact path={route.path}>
@@ -31,13 +44,16 @@ function App() {
   ));
 
   const loadData = async () => {
-    const systemData = SystemDataService.getSystemData();
-    const computersData = ComputerDataService.getComputersData();
-    Promise.all([systemData, computersData])
+    Promise.all([
+      SystemDataService.getSystemData(),
+      ParameterService.GetAllParameters(),
+      ComputerDataService.getComputersData(),
+    ])
       .then((values) => {
-        dispatch(allActions.systemDataActions.setSystemData(values[0]));
-        dispatch(allActions.computersActions.setComputers(values[1]));
         setIsLoad(false);
+        dispatch(allActions.systemDataActions.setSystemData(values[0]));
+        dispatch(allActions.parametersActions.setParametersData(values[1]));
+        dispatch(allActions.computersActions.setComputers(values[2]));
       })
       .catch((error) => {
         console.log(error);
@@ -48,8 +64,13 @@ function App() {
 
   // Initial loading of parameters
   React.useEffect(() => {
-    setIsLoad(true);
-    loadData();
+    const fetchData = async () => {
+      setIsLoad(true);
+      // await getJwt();
+      await loadData();
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -65,9 +86,16 @@ function App() {
       <Backdrop className={classes.backdrop} open={isLoad}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Snackbar open={showError} autoHideDuration={6000} onClose={() => setShowError(false)}>
+      <Snackbar
+        open={showError}
+        autoHideDuration={6000}
+        onClose={() => setShowError(false)}
+      >
         <Alert severity="error">אופס! חלה שגיאה בטעינת הנתונים</Alert>
       </Snackbar>
+      <div className="AppFooter" style={{ color: "black" }}>
+        <AppFooter />
+      </div>
     </div>
   );
 }

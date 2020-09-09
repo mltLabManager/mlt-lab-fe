@@ -2,7 +2,6 @@ import React from "react";
 import useStyles from "./ComputersPage.style";
 import Cover from "../../General/Cover";
 import ComputersList from "../../ComputersList/ComputersList";
-import Computer from "../../../assets/icons/computer.png";
 import { useSelector, useDispatch } from "react-redux";
 import allActions from "../../../actions";
 import { useHistory } from "react-router-dom";
@@ -21,7 +20,6 @@ function ComputerPage() {
     <div>
       <Cover />
       <ComputersList />
-      <img src={Computer} alt="Computer" className={classes.image} />
     </div>
   );
 }

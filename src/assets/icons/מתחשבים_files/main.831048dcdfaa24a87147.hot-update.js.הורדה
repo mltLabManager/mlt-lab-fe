@@ -1,0 +1,100 @@
+webpackHotUpdate("main",{
+
+/***/ "./src/components/Pages/DeliveryPage/DeliveryPage.tsx":
+/*!************************************************************!*\
+  !*** ./src/components/Pages/DeliveryPage/DeliveryPage.tsx ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _General_Cover__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../General/Cover */ "./src/components/General/Cover.tsx");
+/* harmony import */ var _DeliveryList_DeliveryList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../DeliveryList/DeliveryList */ "./src/components/DeliveryList/DeliveryList.tsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+var _jsxFileName = "C:\\Users\\97250\\Desktop\\IDF\\Mitchashvim\\Frontend\\src\\components\\Pages\\DeliveryPage\\DeliveryPage.tsx";
+
+
+
+
+
+
+
+const useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["makeStyles"])({
+  backdrop: {
+    zIndex: 1,
+    color: "#fff"
+  }
+});
+
+function DeliveryPage() {
+  const history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["useHistory"])();
+  const {
+    isPhone
+  } = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["useParams"])();
+  const classes = useStyles();
+  const userId = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useSelector"])(state => state.userId);
+  const deliveries = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useSelector"])(state => state.delivery.rows);
+  const [isLoading, setIsLoading] = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(false);
+
+  if (userId === "") {
+    history.push("/");
+  } // useEffect(() => {
+  //   if(deliveries.length > 0)
+  //     setIsLoading(false);
+  // }, [deliveries])
+
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    __self: this,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 34,
+      columnNumber: 5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_General_Cover__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    __self: this,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 35,
+      columnNumber: 7
+    }
+  }), isLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Backdrop"], {
+    className: classes.backdrop,
+    open: isLoading,
+    __self: this,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 37,
+      columnNumber: 9
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["CircularProgress"], {
+    color: "inherit",
+    __self: this,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 38,
+      columnNumber: 11
+    }
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeliveryList_DeliveryList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    isPhone: isPhone,
+    __self: this,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 41,
+      columnNumber: 9
+    }
+  }));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (DeliveryPage);
+
+/***/ })
+
+})
+//# sourceMappingURL=main.831048dcdfaa24a87147.hot-update.js.map
