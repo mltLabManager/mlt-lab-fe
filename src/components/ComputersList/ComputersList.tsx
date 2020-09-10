@@ -23,7 +23,10 @@ import {
   InputBase,
 } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
@@ -69,7 +72,9 @@ function ComputersList() {
   const values = useSelector((state: RootState) => state.parameterData);
   const [value, setValue] = React.useState(0);
   const [orderNum, setOrderNum] = React.useState<string>("");
-  const [originalState, setOriginalState] = React.useState<RootState["computers"]>(computers);
+  const [originalState, setOriginalState] = React.useState<
+    RootState["computers"]
+  >(computers);
   const [location, setLocation] = React.useState<string[]>([]);
   const [selectedStatus, setSelectedStatus] = React.useState<string[]>([]);
   const [item, setItem] = React.useState<string[]>([]);
@@ -77,22 +82,40 @@ function ComputersList() {
   const [endDate, setendDate] = React.useState<Date | null>(new Date());
   const [selectedDateF, setSelectedDateF] = React.useState<Date | null>();
   const [selectedDateT, setSelectedDateT] = React.useState<Date | null>();
-  const computersTypes = Array.from(new Set(computers.map((x) => x.computerType))).map((id) => {
+  const computersTypes = Array.from(
+    new Set(computers.map((x) => x.computerType))
+  ).map((id) => {
     return {
       id: Number(id),
-      computerType: id ? values[2].systemData.find((val) => id.toString() === val.id.toString())?.value : 0,
+      computerType: id
+        ? values[2].systemData.find(
+            (val) => id.toString() === val.id.toString()
+          )?.value
+        : 0,
     };
   });
-  const locations = Array.from(new Set(computers.map((x) => x.currentLocation))).map((id) => {
+  const locations = Array.from(
+    new Set(computers.map((x) => x.currentLocation))
+  ).map((id) => {
     return {
       id: Number(id),
-      location: id ? values[0].systemData.find((val) => id.toString() === val.id.toString())?.value : 0,
+      location: id
+        ? values[0].systemData.find(
+            (val) => id.toString() === val.id.toString()
+          )?.value
+        : 0,
     };
   });
-  const statuses = Array.from(new Set(computers.map((x) => x.currentStatus))).map((id) => {
+  const statuses = Array.from(
+    new Set(computers.map((x) => x.currentStatus))
+  ).map((id) => {
     return {
       id: Number(id),
-      status: id ? values[1].systemData.find((val) => id.toString() === val.id.toString())?.value : 0,
+      status: id
+        ? values[1].systemData.find(
+            (val) => id.toString() === val.id.toString()
+          )?.value
+        : 0,
     };
   });
 
@@ -149,7 +172,9 @@ function ComputersList() {
     setItem(event.target.value as string[]);
   };
 
-  const handleChangeLocation = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChangeLocation = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
     console.log(event);
     setLocation(event.target.value as string[]);
   };
@@ -232,17 +257,35 @@ function ComputersList() {
             computer.id.toString().includes(orderNum) &&
             (selectedStatus.length > 0
               ? selectedStatus.includes(
-                  values[1].systemData.find((val) => Number(computer.currentStatus) === val.id)?.value.toString()!
+                  values[1].systemData
+                    .find(
+                      (val) =>
+                        Number(computer.currentStatus).toString() ===
+                        val.id.toString()
+                    )
+                    ?.value.toString()!
                 )
               : true) &&
             (item.length > 0
               ? item.includes(
-                  values[2].systemData.find((val) => Number(computer.computerType) === val.id)?.value.toString()!
+                  values[2].systemData
+                    .find(
+                      (val) =>
+                        Number(computer.computerType).toString() ===
+                        val.id.toString()
+                    )
+                    ?.value.toString()!
                 )
               : true) &&
             (location.length > 0
               ? location.includes(
-                  values[0].systemData.find((val) => Number(computer.currentLocation) === val.id)?.value.toString()!
+                  values[0].systemData
+                    .find(
+                      (val) =>
+                        Number(computer.currentLocation).toString() ===
+                        val.id.toString()
+                    )
+                    ?.value.toString()!
                 )
               : true) &&
             new Date(computer.lastUpdateDate) >= selectedDateF &&
@@ -336,7 +379,11 @@ function ComputersList() {
                 renderValue={(selected) => (
                   <div className={classes.chips}>
                     {(selected as string[]).map((value) => (
-                      <Chip key={value} label={value} className={classes.chip} />
+                      <Chip
+                        key={value}
+                        label={value}
+                        className={classes.chip}
+                      />
                     ))}
                   </div>
                 )}
@@ -361,7 +408,11 @@ function ComputersList() {
                 renderValue={(selected) => (
                   <div className={classes.chips}>
                     {(selected as string[]).map((value) => (
-                      <Chip key={value} label={value} className={classes.chip} />
+                      <Chip
+                        key={value}
+                        label={value}
+                        className={classes.chip}
+                      />
                     ))}
                   </div>
                 )}
@@ -386,7 +437,11 @@ function ComputersList() {
                 renderValue={(selected) => (
                   <div className={classes.chips}>
                     {(selected as string[]).map((value) => (
-                      <Chip key={value} label={value} className={classes.chip} />
+                      <Chip
+                        key={value}
+                        label={value}
+                        className={classes.chip}
+                      />
                     ))}
                   </div>
                 )}
