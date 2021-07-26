@@ -24,6 +24,13 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
   },
+  chips: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  chip: {
+    margin: "3px",
+  },
 });
 
 export default useStyles;

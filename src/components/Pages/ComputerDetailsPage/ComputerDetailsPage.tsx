@@ -1,15 +1,6 @@
 import React from "react";
 import useStyles from "./ComputerDetailsPage.style";
-import {
-  Grid,
-  Typography,
-  Button,
-  TextField,
-  Switch,
-  Snackbar,
-  Backdrop,
-  CircularProgress,
-} from "@material-ui/core";
+import { Grid, Typography, Button, TextField, Switch, Snackbar, Backdrop, CircularProgress } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -33,9 +24,9 @@ function ComputerTitle() {
   const [showErrorSave, setShowErrorSave] = React.useState(false);
   const [isLoad, setIsLoad] = React.useState(false);
 
-  const currentComputer = useSelector(
-    (state: RootState) => state.computers
-  ).find((computer) => computer.id.toString() === computerId.toString());
+  const currentComputer = useSelector((state: RootState) => state.computers).find(
+    (computer) => computer.id.toString() == computerId.toString()
+  );
 
   const userId = useSelector((state: RootState) => state.userId);
 
@@ -73,9 +64,7 @@ function ComputerTitle() {
               type={4}
               value={changedComputer.cpu!}
               setValue={(newValue: number) => {
-                setChangedComputer(
-                  Object.assign({}, changedComputer, { cpu: newValue })
-                );
+                setChangedComputer(Object.assign({}, changedComputer, { cpu: newValue }));
               }}
             />
           </Grid>
@@ -87,9 +76,7 @@ function ComputerTitle() {
               type={5}
               value={changedComputer.ram!}
               setValue={(newValue: number) => {
-                setChangedComputer(
-                  Object.assign({}, changedComputer, { ram: newValue })
-                );
+                setChangedComputer(Object.assign({}, changedComputer, { ram: newValue }));
               }}
             />
           </Grid>
@@ -101,9 +88,7 @@ function ComputerTitle() {
               type={6}
               value={changedComputer.sdd!}
               setValue={(newValue: number) => {
-                setChangedComputer(
-                  Object.assign({}, changedComputer, { sdd: newValue })
-                );
+                setChangedComputer(Object.assign({}, changedComputer, { sdd: newValue }));
               }}
             />
           </Grid>
@@ -144,9 +129,7 @@ function ComputerTitle() {
             type={7}
             value={changedComputer.screenSize!}
             setValue={(newValue: number) => {
-              setChangedComputer(
-                Object.assign({}, changedComputer, { screenSize: newValue })
-              );
+              setChangedComputer(Object.assign({}, changedComputer, { screenSize: newValue }));
             }}
           />
         </Grid>
@@ -170,8 +153,7 @@ function ComputerTitle() {
             disableElevation
             style={{ margin: "0px 8px 0px" }}
             className={classes.button}
-            onClick={toHistory}
-          >
+            onClick={toHistory}>
             היסטוריה
           </Button>
           <Grid container style={{ marginTop: "16px" }}>
@@ -190,12 +172,8 @@ function ComputerTitle() {
               />
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
-              <Typography className={classes.inputTitle}>
-                תאריך עדכון
-              </Typography>
-              <Typography className={classes.textField}>
-                {formatDate(changedComputer.lastUpdateDate!)}
-              </Typography>
+              <Typography className={classes.inputTitle}>תאריך עדכון</Typography>
+              <Typography className={classes.textField}>{formatDate(changedComputer.lastUpdateDate!)}</Typography>
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>סטטוס</Typography>
@@ -227,32 +205,19 @@ function ComputerTitle() {
                 }}
               />
             </Grid>
-            <Grid item xs={6} className={classes.inputHolder}>
+            {/* <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>יצרן</Typography>
-              <DropDownList
-                type={8}
-                value={changedComputer?.provider}
-                setValue={(newValue: number) => {
-                  setChangedComputer(
-                    Object.assign({}, changedComputer, {
-                      computerType: newValue,
-                    })
-                  );
-                  setChangedComputer(
-                    Object.assign({}, changedComputer, { provider: newValue })
-                  );
-                }}
-              />
-              {/* <TextField
+              <TextField
                 className={classes.textField}
                 variant="outlined"
                 size="small"
-                value={+changedComputer?.provider}
+                value={changedComputer?.provider}
                 onChange={(event) =>
-                  setChangedComputer(Object.assign({}, changedComputer, { provider: event.target.value as number }))
+                  setChangedComputer(Object.assign({}, changedComputer, { provider: event.target.value }))
                 }
-              /> */}
-            </Grid>
+              />
+            
+            </Grid> */}
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>מודל</Typography>
               <TextField
@@ -271,9 +236,7 @@ function ComputerTitle() {
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>נתרם ע"י</Typography>
-              <Typography className={classes.textField}>
-                {changedComputer.donatedBy}
-              </Typography>
+              <Typography className={classes.textField}>{changedComputer.donatedBy}</Typography>
               {/* <TextField
                 className={classes.textField}
                 variant="outlined"
@@ -285,12 +248,8 @@ function ComputerTitle() {
               /> */}
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
-              <Typography className={classes.inputTitle}>
-                תאריך קליטה
-              </Typography>
-              <Typography className={classes.textField}>
-                {formatDate(changedComputer.entryDate!)}
-              </Typography>
+              <Typography className={classes.inputTitle}>תאריך קליטה</Typography>
+              <Typography className={classes.textField}>{formatDate(changedComputer.entryDate!)}</Typography>
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
               <Typography className={classes.inputTitle}>יעד</Typography>
@@ -309,18 +268,12 @@ function ComputerTitle() {
               />
             </Grid>
             <Grid item xs={6} className={classes.inputHolder}>
-              <Typography className={classes.inputTitle}>
-                תאריך שליחה
-              </Typography>
+              <Typography className={classes.inputTitle}>תאריך שליחה</Typography>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   className={classes.textField}
                   value={changedComputer.deliveryDate}
-                  onChange={(date) =>
-                    setChangedComputer(
-                      Object.assign({}, changedComputer, { deliveryDate: date })
-                    )
-                  }
+                  onChange={(date) => setChangedComputer(Object.assign({}, changedComputer, { deliveryDate: date }))}
                   format="dd.MM.yyyy"
                   minDate={changedComputer.entryDate}
                 />
@@ -337,34 +290,26 @@ function ComputerTitle() {
               justifyContent: "center",
               display: "flex",
               margin: "10px",
-            }}
-          >
-            <Button
-              variant="contained"
-              disableElevation
-              className={classes.button}
-              onClick={onSave}
-            >
+            }}>
+            <Button variant="contained" disableElevation className={classes.button} onClick={onSave}>
               שמירה
             </Button>
           </div>
         </div>
       ) : null}
       {showHistory ? (
-        <HistoryPopup
-          data={currentComputer?.computerHistory}
-          isOpen={showHistory}
-          setIsOpen={setShowHistory}
-        />
+        <HistoryPopup data={currentComputer?.computerHistory} isOpen={showHistory} setIsOpen={setShowHistory} />
       ) : null}
-      <Snackbar open={showSuccessSave} autoHideDuration={2000} onClose={() => {setShowSuccessSave(false); history.push("/computers");}}>
+      <Snackbar
+        open={showSuccessSave}
+        autoHideDuration={2000}
+        onClose={() => {
+          setShowSuccessSave(false);
+          history.push("/computers");
+        }}>
         <Alert severity="success">פרטי המחשב עודכנו בהצלחה</Alert>
       </Snackbar>
-      <Snackbar
-        open={showErrorSave}
-        autoHideDuration={6000}
-        onClose={() => setShowErrorSave(false)}
-      >
+      <Snackbar open={showErrorSave} autoHideDuration={6000} onClose={() => setShowErrorSave(false)}>
         <Alert severity="error">אופס! חלה שגיאה בעדכון פרטי המחשב</Alert>
       </Snackbar>
       <Backdrop className={classes.backdrop} open={isLoad}>

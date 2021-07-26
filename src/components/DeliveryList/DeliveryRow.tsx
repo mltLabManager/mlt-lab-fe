@@ -16,7 +16,7 @@ function DeliveryRow({ data, isPhone }: DeliveryRowProps) {
   const dispatch = useDispatch();
   const [deliveryData, setDeliveryData] = useState(data);
   const valuesType = useSelector((state: RootState) => state.parameterData)[2].systemData;
-  const valuesManuFacture = useSelector((state: RootState) => state.parameterData)[7].systemData;
+  //const valuesManuFacture = useSelector((state: RootState) => state.parameterData)[5].systemData;
   const computerType = useSelector((state: RootState) => state.parameterData)[2]?.systemData.find(
     (sys) => sys.id.toString() === data.type.toString()
   );
@@ -24,6 +24,7 @@ function DeliveryRow({ data, isPhone }: DeliveryRowProps) {
 
   useEffect(() => {
     setDeliveryData(data);
+    console.log("deliveryData ", deliveryData);
   }, [data]);
   return (
     <Grid container className={classes.root}>
@@ -32,8 +33,7 @@ function DeliveryRow({ data, isPhone }: DeliveryRowProps) {
         xs={4}
         onClick={() => {
           setEditId(true);
-        }}
-      >
+        }}>
         {!editId ? (
           <Typography className={classes.text} style={{ color: "lightgray" }}>
             מספר סידורי
@@ -65,8 +65,7 @@ function DeliveryRow({ data, isPhone }: DeliveryRowProps) {
                   allActions.deliveryActions.changeDelivery({ ...deliveryData, type: event.target.value as number })
                 )
               }
-              label="Type"
-            >
+              label="Type">
               {valuesType.map((val) => (
                 <MenuItem key={val.id + val.value} value={val.id}>
                   {val.value}
@@ -92,46 +91,6 @@ function DeliveryRow({ data, isPhone }: DeliveryRowProps) {
               //setDeliveryData({ ...deliveryData, donator: event.target.value });
             }}
           />
-        )}
-      </Grid>
-      <Grid item xs={2} style={{ justifyContent: "center", display: "flex" }}>
-        {isPhone ? (
-          <Checkbox
-            checked={data.isMissing}
-            className={classes.text}
-            onChange={() => {
-              dispatch(allActions.deliveryActions.changeDelivery({ ...deliveryData, isMissing: !data.isMissing }));
-            }}
-            color="primary"
-          />
-        ) : (
-          // <TextField
-          //   style={{ marginRight: "5px", marginLeft: "5px" }}
-          //   margin="dense"
-          //   autoFocus
-          //   placeholder="שם יצרן"
-          //   variant="outlined"
-          //   value={data.provider}
-          //   onChange={(event) => {
-          //     dispatch(allActions.deliveryActions.changeDelivery({ ...data, provider: event.target.value }));
-          //   }}
-          // />
-          <FormControl variant="standard" margin="dense" className={classes.dropDown}>
-            <Select
-              value={deliveryData?.provider == null ? "" : deliveryData?.provider}
-              onChange={(event) =>
-                // setDeliveryData({ ...deliveryData, provider: event.target.value as number })
-                dispatch(allActions.deliveryActions.changeDelivery({ ...data, provider: event.target.value as number }))
-              }
-              label="Type"
-            >
-              {valuesManuFacture.map((val) => (
-                <MenuItem key={val.id + val.value} value={val.id}>
-                  {val.value}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
         )}
       </Grid>
     </Grid>

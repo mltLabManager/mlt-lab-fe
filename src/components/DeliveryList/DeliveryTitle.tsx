@@ -21,7 +21,8 @@ function DeliveryTitle({ isPhone }: DeliveryTitleProps) {
       </Grid>
       <Grid item xs={2}>
         {isPhone ? (
-          <Typography className={classes.text}>חסר</Typography>
+          // <Typography className={classes.text}>חסר</Typography>
+          <></>
         ) : (
           <Typography className={classes.text}>יצרן</Typography>
         )}

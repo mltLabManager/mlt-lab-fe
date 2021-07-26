@@ -34,7 +34,6 @@ function LoginPage() {
         phone: phone,
         password: password,
       });
-      console.log(token);
       if (token.tokenJson?.length > 0) {
         dispatch(allActions.userActions.setUser(phone));
         history.push("/computers");

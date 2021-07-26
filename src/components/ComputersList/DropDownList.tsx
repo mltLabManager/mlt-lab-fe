@@ -10,15 +10,8 @@ type DropDownListProps = {
   setValue: (newValue: number) => void;
 };
 
-function DropDownList({
-  type,
-  disableSelect,
-  value,
-  setValue,
-}: DropDownListProps) {
-  const values = useSelector((state: RootState) => state.parameterData)[
-    type - 1
-  ]?.systemData;
+function DropDownList({ type, disableSelect, value, setValue }: DropDownListProps) {
+  const values = useSelector((state: RootState) => state.parameterData)[type - 1]?.systemData;
   const classes = useStyles();
 
   return (
@@ -26,9 +19,8 @@ function DropDownList({
       <Select
         disabled={disableSelect}
         value={value == null ? "" : value}
-        onChange={(event) => setValue(event.target.value as number)}
-      >
-        {values.map((val) => (
+        onChange={(event) => setValue(event.target.value as number)}>
+        {values?.map((val) => (
           <MenuItem key={val.id + val.value} value={val.id}>
             {val.value}
           </MenuItem>

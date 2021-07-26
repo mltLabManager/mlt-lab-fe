@@ -30,16 +30,17 @@ function DeliveryList({ isPhone }: DeliveryListProps) {
   const [locationDelivery, setLocationDelivery] = React.useState(1);
   const [newItem, setNewItem] = React.useState(false);
   const [isLoad, setIsLoad] = React.useState(false);
+  let deliveryId = "";
 
   React.useEffect(() => {
     if (isPhone || newItem) {
+      console.log("deliveries", deliveries);
       setDeliveriesData(deliveries);
     } else setDeliveriesData([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveries, isPhone]);
 
   const reportDeliveryReception = () => {
-
     setIsLoad(true);
 
     if (validateDeliveryRows()) {
@@ -48,16 +49,25 @@ function DeliveryList({ isPhone }: DeliveryListProps) {
       deliveriesData.forEach((data, index) => {
         saveDeliveryToDB[index].currentLocation = locationDelivery;
         saveDeliveryToDB[index].currentStatus = statusDelivery;
+        deliveryId = saveDeliveryToDB[index].deliveryId;
       });
-        
-      (isPhone ? ComputerDataService.reportDeliveryReception(saveDeliveryToDB, courierPhoneNumber) : ComputerDataService.createDeliveryReception(saveDeliveryToDB)).then(result => {
+
+      (isPhone
+        ? deliveryId == "truck"
+          ? ComputerDataService.createDeliveryReception(saveDeliveryToDB)
+          : ComputerDataService.reportDeliveryReception(saveDeliveryToDB, courierPhoneNumber)
+        : ComputerDataService.createDeliveryReception(saveDeliveryToDB)
+      )
+        .then((result) => {
           console.log(result);
           dispatch(allActions.computersActions.addComputers(result.data));
+          dispatch(allActions.deliveryActions.setDeliveryRows([]));
           setSuccessMessageText("דיווח הקליטה בוצע בהצלחה");
           setIsMessageShown(true);
           setIsLoad(false);
           setTimeout(() => history.push("/computers"), 2000);
-        }).catch((error) => {
+        })
+        .catch((error) => {
           setErrorMessageText("דיווח הקליטה נכשל, אנא נסו שנית");
           setIsMessageShown(true);
           setIsLoad(false);
@@ -89,12 +99,12 @@ function DeliveryList({ isPhone }: DeliveryListProps) {
     setNewItem(true);
     setDeliveriesData([
       ...deliveriesData,
-      { deliveryId: '', type: 1, provider: 1, isMissing: false, rowIndex: Date.now() } as DeliveryRowType,
+      { deliveryId: "", type: 1, provider: 1, isMissing: false, rowIndex: Date.now() } as DeliveryRowType,
     ]);
     dispatch(
       allActions.deliveryActions.setDeliveryRows([
         ...deliveriesData,
-        { deliveryId: '', type: 1, provider: 1, isMissing: false, rowIndex: Date.now() } as DeliveryRowType,
+        { deliveryId: "", type: 1, provider: 1, isMissing: false, rowIndex: Date.now() } as DeliveryRowType,
       ])
     );
   };
@@ -123,62 +133,77 @@ function DeliveryList({ isPhone }: DeliveryListProps) {
         </Grid>
       </Grid>
 
-      { isPhone? 
-      <>
-        <DeliveryTitle isPhone={true} />
-        <div style={{ height: window.innerHeight - listOffset }} className={classes.list}>
-          {deliveriesData.map((item) => (
-            (item.deliveryId !== '') ?
-            <DeliveryRow key={item.deliveryId + item.rowIndex.toString()} data={item} isPhone={(item.deliveryId !== '')} /> :
-            <></>
-          ))}
-          { newItem? 
-            <div>
-              <DeliveryTitle isPhone={false} />
-              {deliveriesData.map((item) => (
-                (item.deliveryId === '') ?
-                <DeliveryRow key={item.deliveryId + item.rowIndex.toString()} data={item} isPhone={(item.deliveryId !== '')} /> :
+      {isPhone ? (
+        <>
+          <DeliveryTitle isPhone={true} />
+          <div style={{ height: window.innerHeight - listOffset }} className={classes.list}>
+            {deliveriesData.map((item) =>
+              item.deliveryId !== "" ? (
+                <DeliveryRow
+                  key={item.deliveryId + item.rowIndex.toString()}
+                  data={item}
+                  isPhone={item.deliveryId !== ""}
+                />
+              ) : (
                 <></>
-              ))}
-            </div>
-            : <></>
-          }
-          <Fab
-            size="small"
-            style={{ color: "#fff", backgroundColor: "#0f7d6a", margin: "24px 8px" }}
-            onClick={addNewRow}
-          >
-            <AddIcon />
-          </Fab>
-          <Grid item xs={12} className={classes.reportDelivery}>
-            <Button size="large" className={classes.button} variant="contained" onClick={reportDeliveryReception}>
-              דיווח קליטה
-            </Button>
-          </Grid>
-        </div>   
-      </>   
-      :
-      <>
-        <DeliveryTitle isPhone={isPhone} />
-        <div style={{ height: window.innerHeight - listOffset }} className={classes.list}>
-          {deliveriesData.map((item) => (
-            <DeliveryRow key={item.deliveryId + item.rowIndex.toString()} data={item} isPhone={(item.deliveryId !== '')} />
-          ))}
-          <Fab
-            size="small"
-            style={{ color: "#fff", backgroundColor: "#0f7d6a", margin: "24px 8px" }}
-            onClick={addNewRow}
-          >
-            <AddIcon />
-          </Fab>
-          <Grid item xs={12} className={classes.reportDelivery}>
-            <Button size="large" className={classes.button} variant="contained" onClick={reportDeliveryReception}>
-              דיווח קליטה
-            </Button>
-          </Grid>
-        </div>   
-      </>
-      }
+              )
+            )}
+            {newItem ? (
+              <div>
+                <DeliveryTitle isPhone={false} />
+                {deliveriesData.map((item) =>
+                  item.deliveryId === "" ? (
+                    <DeliveryRow
+                      key={item.deliveryId + item.rowIndex.toString()}
+                      data={item}
+                      isPhone={item.deliveryId !== ""}
+                    />
+                  ) : (
+                    <></>
+                  )
+                )}
+              </div>
+            ) : (
+              <></>
+            )}
+            <Fab
+              size="small"
+              style={{ color: "#fff", backgroundColor: "#0f7d6a", margin: "24px 8px" }}
+              onClick={addNewRow}>
+              <AddIcon />
+            </Fab>
+            <Grid item xs={12} className={classes.reportDelivery}>
+              <Button size="large" className={classes.button} variant="contained" onClick={reportDeliveryReception}>
+                דיווח קליטה
+              </Button>
+            </Grid>
+          </div>
+        </>
+      ) : (
+        <>
+          <DeliveryTitle isPhone={isPhone} />
+          <div style={{ height: window.innerHeight - listOffset }} className={classes.list}>
+            {deliveriesData.map((item) => (
+              <DeliveryRow
+                key={item.deliveryId + item.rowIndex.toString()}
+                data={item}
+                isPhone={item.deliveryId !== ""}
+              />
+            ))}
+            <Fab
+              size="small"
+              style={{ color: "#fff", backgroundColor: "#0f7d6a", margin: "24px 8px" }}
+              onClick={addNewRow}>
+              <AddIcon />
+            </Fab>
+            <Grid item xs={12} className={classes.reportDelivery}>
+              <Button size="large" className={classes.button} variant="contained" onClick={reportDeliveryReception}>
+                דיווח קליטה
+              </Button>
+            </Grid>
+          </div>
+        </>
+      )}
       <Snackbar
         open={isMessageShown}
         autoHideDuration={6000}
@@ -186,8 +211,7 @@ function DeliveryList({ isPhone }: DeliveryListProps) {
           setIsMessageShown(false);
           setErrorMessageText("");
           setSuccessMessageText("");
-        }}
-      >
+        }}>
         <Alert severity={errorMessageText ? "error" : "success"}>
           <div style={{ paddingRight: "5px" }}>{errorMessageText ? errorMessageText : successMessageText}</div>
         </Alert>

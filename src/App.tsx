@@ -86,11 +86,7 @@ function App() {
       <Backdrop className={classes.backdrop} open={isLoad}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Snackbar
-        open={showError}
-        autoHideDuration={6000}
-        onClose={() => setShowError(false)}
-      >
+      <Snackbar open={showError} autoHideDuration={6000} onClose={() => setShowError(false)}>
         <Alert severity="error">אופס! חלה שגיאה בטעינת הנתונים</Alert>
       </Snackbar>
       <div className="AppFooter" style={{ color: "black" }}>
